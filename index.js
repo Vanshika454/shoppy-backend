@@ -11,7 +11,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 
 //constants
-const port = 3033;
+const port = process.env.PORT || 3000;
 
 //inits
 const app = express();
