@@ -67,8 +67,18 @@ module.exports.loginUser = async (req, res) => {
 
             res
                 .status(200)
-                .cookie('jwt', token)
-                .cookie('userId', `${user._id.toString()}`)
+                .cookie('jwt', token, {
+                    httpOnly: true, // Ensure the cookie is sent only in HTTP requests, not accessible via JavaScript
+                    secure: true, // Ensure the cookie is only sent over HTTPS
+                    sameSite: 'None', // Required for cross-site cookies
+                    maxAge: 24 * 60 * 60 * 1000 // 1 day
+                })
+                .cookie('userId', `${user._id.toString()}`, {
+                    httpOnly: true, // Ensure the cookie is sent only in HTTP requests, not accessible via JavaScript
+                    secure: true, // Ensure the cookie is only sent over HTTPS
+                    sameSite: 'None', // Required for cross-site cookies
+                    maxAge: 24 * 60 * 60 * 1000 // 1 day
+                })
                 .send({
                     message: 'Logged in successfully',
                     user: userWithoutPassword
